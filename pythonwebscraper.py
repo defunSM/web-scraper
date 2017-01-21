@@ -1,10 +1,26 @@
 #!/usr/bin/env python
+import sys, os
 import requests
 from bs4 import BeautifulSoup
 
+from optparse import OptionParser
+
 def main():
 
-    link = 'https://en.wikipedia.org/wiki/Physics'
+    parser = OptionParser()
+    parser.add_option("-l", "--link", help="Select a link to scrap.")
+
+    options, arguments = parser.parse_args()
+
+    if options.link:
+
+        link = options.link
+
+    else:
+
+        link = 'https://en.wikipedia.org/wiki/Physics'
+
+
     resp = requests.get(link)
     soup = BeautifulSoup(resp.text, 'lxml')
 
@@ -29,11 +45,6 @@ def main():
             f.write("\n")
 
     f.close()
-
-
-
-
-
 
 if __name__=="__main__":
     main()
